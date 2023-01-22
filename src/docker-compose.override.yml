@@ -101,6 +101,14 @@ services:
       - "5101:80"
       - "9101:81"
 
+  coupon-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=mongodb://nosqldata
+      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq}
+    ports:
+      - "5115:80"
+
   ordering-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -177,27 +185,29 @@ services:
     volumes:
       - ./ApiGateways/Envoy/config/mobileshopping:/etc/envoy
     ports:
-    - "5200:80"
-    - "15200:8001"
+      - "5200:80"
+      - "15200:8001"
 
   webshoppingapigw:
     volumes:
       - ./ApiGateways/Envoy/config/webshopping:/etc/envoy
     ports:
-    - "5202:80"
-    - "15202:8001"
+      - "5202:80"
+      - "15202:8001"
 
   mobileshoppingagg:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - urls__basket=http://basket-api
       - urls__catalog=http://catalog-api
+      - urls__coupon=http://coupon-api
       - urls__orders=http://ordering-api
       - urls__identity=http://identity-api
       - urls__grpcBasket=http://basket-api:81
       - urls__grpcCatalog=http://catalog-api:81
       - urls__grpcOrdering=http://ordering-api:81
       - CatalogUrlHC=http://catalog-api/hc
+      - CouponUrlHC=http://coupon-api/hc
       - OrderingUrlHC=http://ordering-api/hc
       - IdentityUrlHC=http://identity-api/hc
       - BasketUrlHC=http://basket-api/hc
@@ -211,12 +221,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - urls__basket=http://basket-api
       - urls__catalog=http://catalog-api
+      - urls__coupon=http://coupon-api
       - urls__orders=http://ordering-api
       - urls__identity=http://identity-api
       - urls__grpcBasket=http://basket-api:81
       - urls__grpcCatalog=http://catalog-api:81
       - urls__grpcOrdering=http://ordering-api:81
       - CatalogUrlHC=http://catalog-api/hc
+      - CouponUrlHC=http://coupon-api/hc
       - OrderingUrlHC=http://ordering-api/hc
       - IdentityUrlHC=http://identity-api/hc
       - BasketUrlHC=http://basket-api/hc
@@ -265,6 +277,8 @@ services:
       - HealthChecksUI__HealthChecks__9__Uri=http://ordering-signalrhub/hc
       - HealthChecksUI__HealthChecks__10__Name=Ordering HTTP Background Check
       - HealthChecksUI__HealthChecks__10__Uri=http://ordering-backgroundtasks/hc
+      - HealthChecksUI__HealthChecks__11__Name=Coupon HTTP Check
+      - HealthChecksUI__HealthChecks__11__Uri=http://coupon-api/hc
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -302,7 +316,7 @@ services:
   webhooks-client:
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - Token=6168DB8D-DC58-4094-AF24-483278923590      # Webhooks are registered with this token (any value is valid) but the client won't check it
+      - Token=6168DB8D-DC58-4094-AF24-483278923590 # Webhooks are registered with this token (any value is valid) but the client won't check it
       - IdentityUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
       - CallBackUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5114
       - WebhooksUrl=http://webhooks-api
@@ -316,4 +330,3 @@ volumes:
     external: false
   eshop-basketdata:
     external: false
-

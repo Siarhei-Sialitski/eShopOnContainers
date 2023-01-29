@@ -102,6 +102,7 @@ services:
       - ordering-api
       - catalog-api
       - basket-api
+      - coupon-api
 
   webshoppingagg:
     image: ${REGISTRY:-eshop}/webshoppingagg:${PLATFORM:-linux}-${TAG:-latest}
@@ -116,6 +117,7 @@ services:
       - ordering-api
       - catalog-api
       - basket-api
+      - coupon-api
 
   ordering-signalrhub:
     image: ${REGISTRY:-eshop}/ordering.signalrhub:${PLATFORM:-linux}-${TAG:-latest}

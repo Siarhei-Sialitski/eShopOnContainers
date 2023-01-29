@@ -3,6 +3,7 @@ using MongoDB.Driver;
 
 namespace Coupon.API.Infrastructure.Repositories;
 
+// TO DO Merge contexts
 public class LoyaltyMemberContext
 {
     private readonly IMongoDatabase _database = null;

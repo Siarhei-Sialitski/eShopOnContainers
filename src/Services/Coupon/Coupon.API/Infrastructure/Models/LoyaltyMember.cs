@@ -8,7 +8,7 @@ public class LoyaltyMember
     [BsonIgnoreIfDefault]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
-
+    public string UserId { get; set; }
     public double Points { get; set; }
     public int TransactionsCount { get; set; }
 }

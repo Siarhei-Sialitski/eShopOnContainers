@@ -4,30 +4,30 @@ namespace Coupon.API.Infrastructure.Repositories;
 
 public class LoyaltyMemberRepository : ILoyaltyMemberRepository
 {
-    private readonly LoyaltyMemberContext _loyaltyMemberContext;
+    private readonly CouponContext _couponContext;
 
-    public LoyaltyMemberRepository(LoyaltyMemberContext loyaltyMemberContext)
+    public LoyaltyMemberRepository(CouponContext couponContext)
     {
-        _loyaltyMemberContext = loyaltyMemberContext;
+        _couponContext = couponContext;
     }
 
-    public async Task<LoyaltyMember> FindLoyaltyMemberById(string id)
+    public async Task<LoyaltyMember> FindLoyaltyMemberByUserId(string userId)
     {
-        var filter = Builders<LoyaltyMember>.Filter.Eq("Id", id);
-        return await _loyaltyMemberContext.LoyaltyMembers.Find(filter).FirstOrDefaultAsync();
+        var filter = Builders<LoyaltyMember>.Filter.Eq("UserId", userId);
+        return await _couponContext.LoyaltyMembers.Find(filter).FirstOrDefaultAsync();
     }
 
-    public async Task CreateLoyaltyMemberById(string id, double points)
+    public async Task CreateLoyaltyMemberByUserId(string userId, double points)
     {
-        await _loyaltyMemberContext.LoyaltyMembers.InsertOneAsync(new LoyaltyMember() { Id = id, Points = points, TransactionsCount = 1});
+        await _couponContext.LoyaltyMembers.InsertOneAsync(new LoyaltyMember() { UserId = userId, Points = points, TransactionsCount = 1});
     }
 
-    public async Task UpdateLoyaltyMemberById(string id, double points, int transactionsCount)
+    public async Task UpdateLoyaltyMemberByUserId(string userId, double points, int transactionsCount)
     {
-        var filter = Builders<LoyaltyMember>.Filter.Eq("Id", id);
+        var filter = Builders<LoyaltyMember>.Filter.Eq("UserId", userId);
         var update = Builders<LoyaltyMember>.Update
             .Set(m => m.Points, points)
             .Set(m => m.TransactionsCount, transactionsCount);
-        await _loyaltyMemberContext.LoyaltyMembers.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = false }) ;
+        await _couponContext.LoyaltyMembers.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = false }) ;
     }
 }

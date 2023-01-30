@@ -16,17 +16,17 @@ public class OrderStatusChangedToPaidIntegrationEventHandler : IIntegrationEvent
 
     public async Task Handle(OrderStatusChangedToPaidIntegrationEvent @event)
     {
-        var loyaltyMember = await _loyaltyMemberRepository.FindLoyaltyMemberById(@event.UserId);
+        var loyaltyMember = await _loyaltyMemberRepository.FindLoyaltyMemberByUserId(@event.UserId);
         if (loyaltyMember == null)
         {
-            await _loyaltyMemberRepository.CreateLoyaltyMemberById(@event.UserId, @event.TotalSum * 0.1);
+            await _loyaltyMemberRepository.CreateLoyaltyMemberByUserId(@event.UserId, @event.TotalSum * 0.1);
             _logger.CreateLogger<OrderStatusChangedToPaidIntegrationEvent>()
             .LogTrace("Loyalty member with Id: {UserId} created with {points} points ",
                 @event.UserId, @event.TotalSum * 0.1);
         }
         else
         {
-            await _loyaltyMemberRepository.UpdateLoyaltyMemberById(@event.UserId, @event.TotalSum * 0.1 + loyaltyMember.Points, loyaltyMember.TransactionsCount++);
+            await _loyaltyMemberRepository.UpdateLoyaltyMemberByUserId(@event.UserId, @event.TotalSum * 0.1 + loyaltyMember.Points, loyaltyMember.TransactionsCount++);
             _logger.CreateLogger<OrderStatusChangedToPaidIntegrationEvent>()
             .LogTrace("Loyalty member with Id: {UserId} updated with {points} points and transactions count {transactionsCount}",
                 @event.UserId, @event.TotalSum * 0.1 + loyaltyMember.Points, loyaltyMember.TransactionsCount);

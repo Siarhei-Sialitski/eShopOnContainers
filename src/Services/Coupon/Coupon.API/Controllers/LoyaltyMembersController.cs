@@ -18,7 +18,7 @@ public class LoyaltyMembersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Infrastructure.Models.LoyaltyMember>> GetLoyaltyMemberByIdAsync(string id)
     {
-        var loyaltyMember = await _loyaltyMemberRepository.FindLoyaltyMemberById(id);
+        var loyaltyMember = await _loyaltyMemberRepository.FindLoyaltyMemberByUserId(id);
 
         if (loyaltyMember is null)
         {

@@ -2,7 +2,7 @@
 
 public interface ILoyaltyMemberRepository
 {
-    Task<LoyaltyMember> FindLoyaltyMemberById(string id);
-    Task CreateLoyaltyMemberById(string id, double points);
-    Task UpdateLoyaltyMemberById(string id, double points, int transactionsCount);
+    Task<LoyaltyMember> FindLoyaltyMemberByUserId(string userId);
+    Task CreateLoyaltyMemberByUserId(string userId, double points);
+    Task UpdateLoyaltyMemberByUserId(string userId, double points, int transactionsCount);
 }

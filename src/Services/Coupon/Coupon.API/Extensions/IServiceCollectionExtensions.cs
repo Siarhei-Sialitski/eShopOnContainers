@@ -31,8 +31,7 @@ public static class IServiceCollectionExtensions
                 return new DefaultRabbitMQPersistentConnection(factory, service.GetService<ILogger<DefaultRabbitMQPersistentConnection>>(), retryCount);
             })
             .AddTransient<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>()
-            .AddTransient<CouponContext>()
-            .AddTransient<LoyaltyMemberContext>();
+            .AddTransient<CouponContext>();
 
         return services;
     }

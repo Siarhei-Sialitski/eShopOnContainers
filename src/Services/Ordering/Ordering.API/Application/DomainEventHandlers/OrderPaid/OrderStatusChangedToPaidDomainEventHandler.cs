@@ -1,5 +1,5 @@
 ﻿namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.DomainEventHandlers.OrderPaid;
-    
+
 public class OrderStatusChangedToPaidDomainEventHandler
                 : INotificationHandler<OrderStatusChangedToPaidDomainEvent>
 {
@@ -33,11 +33,16 @@ public class OrderStatusChangedToPaidDomainEventHandler
         var orderStockList = orderStatusChangedToPaidDomainEvent.OrderItems
             .Select(orderItem => new OrderStockItem(orderItem.ProductId, orderItem.GetUnits()));
 
+        var totalSum = Convert.ToInt32(orderStatusChangedToPaidDomainEvent.OrderItems
+            .Select(orderItem => orderItem.GetUnitPrice() * orderItem.GetUnits()).Sum());
+
         var orderStatusChangedToPaidIntegrationEvent = new OrderStatusChangedToPaidIntegrationEvent(
             orderStatusChangedToPaidDomainEvent.OrderId,
             order.OrderStatus.Name,
+            buyer.IdentityGuid,
             buyer.Name,
-            orderStockList);
+            orderStockList,
+            totalSum);
 
         await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStatusChangedToPaidIntegrationEvent);
     }

@@ -5,6 +5,7 @@ public static class IServiceCollectionExtensions
     public static IServiceCollection AddCouponRegister(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddTransient<ICouponRepository, CouponRepository>()
+            .AddTransient<ILoyaltyMemberRepository, LoyaltyMemberRepository>()
             .AddTransient<IServiceBusPersisterConnection, DefaultServiceBusPersisterConnection>(service =>
             {
                 var settings = service.GetRequiredService<IOptions<CouponSettings>>().Value;

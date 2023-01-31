@@ -21,5 +21,6 @@
         }
 
         public IMongoCollection<Coupon> Coupons => _database.GetCollection<Coupon>("CouponCollection");
+        public IMongoCollection<LoyaltyMember> LoyaltyMembers => _database.GetCollection<LoyaltyMember>("LoyaltyMemberCollection");
     }
 }

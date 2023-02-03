@@ -43,6 +43,8 @@ env:
       key: internalurls__identity
     - name: CatalogUrlHC
       key: internalurls__catalog__hc
+    - name: CouponUrlHC
+      key: internalurls__coupon__hc
     - name: BasketUrlHC
       key: internalurls__basket__hc
     - name: IdentityUrlHC

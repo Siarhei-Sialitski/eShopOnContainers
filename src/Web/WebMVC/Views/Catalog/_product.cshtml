@@ -7,7 +7,7 @@
     <input class="esh-catalog-button @((!User.Identity.IsAuthenticated) ? "is-disabled" : "")" type="submit" value="[ ADD TO CART ]" />
 
     <div class="esh-catalog-name">
-        <span>@Model.Name</span>
+        <span>Awesome @Model.Name</span>
     </div>
     <div class="esh-catalog-price">
         <span>@Model.Price.ToString("N2")</span>

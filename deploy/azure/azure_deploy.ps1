@@ -45,7 +45,7 @@ cd -
 cd ../deploy/k8s/helm
 kubectl create ns eshop
 #./deploy-all.sh --dns aks --aks-name $aks --aks-rg $rg -t linux-latest
-.\deploy-all.ps1 -externalDns aks -aksName $aks -aksRg $rg -imageTag linux-dev -useMesh $false
+#.\deploy-all.ps1 -externalDns aks -aksName $aks -aksRg $rg -imageTag linux-dev -useMesh $false
 .\deploy-all.ps1 -externalDns aks -aksName $aks -aksRg $rg -imageTag linux-latest -registry "{$acr}.azurecr.io" -dockerUser $acrUser -dockerPassword $acrPassword -useMesh $false
 
 # fix versions for apigwms (envoy)

@@ -71,6 +71,15 @@ services:
     volumes:
       - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
 
+  coupon-api-unit-test:
+    image: ${REGISTRY:-eshop}/coupon-api-unit-test:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Services/Coupon.UnitTests/Coupon.UnitTests
+      target: unittest
+    volumes:
+      - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
+
   ordering-api-functional-test:
     image: ${REGISTRY:-eshop}/ordering-api-test:${TAG:-latest}
     build:

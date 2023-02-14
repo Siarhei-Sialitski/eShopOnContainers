@@ -23,6 +23,7 @@ spnId=$(az ad sp list --display-name http://$spnName --query [0].appId  --output
 
 # create AKS cluster
 az aks create -g $rg -n $aks --node-count 1 --enable-addons monitoring, http_application_routing --enable-azure-rbac --enable-aad --generate-ssh-keys --attach-acr $acr
+
 $AKS_ID = $(az aks show -g $rg -n $aks --query id -o tsv)
 # assign cluster admin rolw to spn
 Azure Kubernetes Service Cluster User Role
@@ -33,6 +34,12 @@ az role assignment create --role "Azure Kubernetes Service Cluster Admin Role" -
 az aks get-credentials -g $rg -n $aks
 
 az role assignment create --role "Azure Kubernetes Service RBAC Cluster Admin" --assignee $localUser --scope $AKS_ID 
+=======
+
+# set the k8s context locally
+az aks get-credentials -g $rg -n $aks
+az role assignment create --role "Azure Kubernetes Service RBAC Cluster Admin" --assignee siarhei_sialitski@epam.com --scope $AKS_ID 
+
 # deploy nginx controller
 cd ../deploy/k8s/nginx-ingress
 kubectl apply -f mandatory.yaml

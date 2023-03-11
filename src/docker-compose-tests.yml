@@ -71,12 +71,27 @@ services:
     volumes:
       - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
 
+  coupon-api-functional-test:
+    image: ${REGISTRY:-eshop}/coupon-api-functional-test:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Services/Coupon/Coupon.API/Dockerfile
+      target: functionaltest
+    depends_on:
+      - nosql-data-test
+      - rabbitmq-test
+    volumes:
+      - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
+
   coupon-api-unit-test:
     image: ${REGISTRY:-eshop}/coupon-api-unit-test:${TAG:-latest}
     build:
       context: .
-      dockerfile: Services/Coupon.UnitTests/Coupon.UnitTests
+      dockerfile: Services/Coupon/Coupon.API/Dockerfile
       target: unittest
+    depends_on:
+      - nosql-data-test
+      - rabbitmq-test
     volumes:
       - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
 

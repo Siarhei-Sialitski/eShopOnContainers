@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:57425/",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:61044/",
+      "sslPort": 44349
     }
   },
   "profiles": {
@@ -28,9 +28,9 @@
     "Azure Dev Spaces": {
       "commandName": "AzureDevSpaces",
       "launchBrowser": true,
+      "subscriptionId": "e3035ac1-c06c-4daf-8939-57b3c5f1f759",
       "resourceGroup": "eshoptestedu",
-      "aksName": "eshoptestedu",
-      "subscriptionId": "e3035ac1-c06c-4daf-8939-57b3c5f1f759"
+      "aksName": "eshoptestedu"
     }
   }
 }

@@ -29,7 +29,7 @@ public class ValueObjectTests
 
     private static readonly ValueObject APrettyValueObject = new ValueObjectA(1, "2", Guid.Parse("97ea43f0-6fef-4fb7-8c67-9114a7ff6ec0"), new ComplexObject(2, "3"));
 
-    public static readonly TheoryData<ValueObject, ValueObject, string> EqualValueObjects = new TheoryData<ValueObject, ValueObject, string>
+    public static readonly IEnumerable<object[]> EqualValueObjects = new TheoryData<ValueObject, ValueObject, string>
     {
         {
             null,

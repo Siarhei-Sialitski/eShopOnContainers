@@ -130,6 +130,46 @@ services:
         - test
         - --logger
         - trx;LogFileName=/tests/catalog-unit-test-results.xml
+  
+  coupon-api-unit-test:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=mongodb://nosql-data-test
+      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq-test}
+      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
+      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}
+      - AzureServiceBusEnabled=False
+      - identityUrl=http://identity-api
+      - IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
+      - GRPC_PORT=81
+      - PORT=80
+    ports:
+      - "5115:80"
+    entrypoint:
+        - dotnet
+        - test
+        - --logger
+        - trx;LogFileName=/tests/coupon-unit-test-results.xml
+
+  coupon-api-functional-test:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=mongodb://nosql-data-test
+      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq-test}
+      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
+      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}
+      - AzureServiceBusEnabled=False
+      - identityUrl=http://identity-api
+      - IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
+      - GRPC_PORT=81
+      - PORT=80
+    ports:
+      - "5195:80"
+    entrypoint:
+        - dotnet
+        - test
+        - --logger
+        - trx;LogFileName=/tests/coupon-functional-test-results.xml
 
   ordering-api-functional-test:
     environment:

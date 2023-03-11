@@ -28,6 +28,7 @@ COPY "Services/Catalog/Catalog.API/Catalog.API.csproj" "Services/Catalog/Catalog
 COPY "Services/Catalog/Catalog.FunctionalTests/Catalog.FunctionalTests.csproj" "Services/Catalog/Catalog.FunctionalTests/Catalog.FunctionalTests.csproj"
 COPY "Services/Catalog/Catalog.UnitTests/Catalog.UnitTests.csproj" "Services/Catalog/Catalog.UnitTests/Catalog.UnitTests.csproj"
 COPY "Services/Coupon/Coupon.API/Coupon.API.csproj" "Services/Coupon/Coupon.API/Coupon.API.csproj"
+COPY "Services/Coupon/Coupon.FunctionalTests/Coupon.FunctionalTests.csproj" "Services/Coupon/Coupon.FunctionalTests/Coupon.FunctionalTests.csproj"
 COPY "Services/Coupon/Coupon.UnitTests/Coupon.UnitTests.csproj" "Services/Coupon/Coupon.UnitTests/Coupon.UnitTests.csproj"
 COPY "Services/Identity/Identity.API/Identity.API.csproj" "Services/Identity/Identity.API/Identity.API.csproj"
 COPY "Services/Ordering/Ordering.API/Ordering.API.csproj" "Services/Ordering/Ordering.API/Ordering.API.csproj"
@@ -53,6 +54,12 @@ RUN dotnet restore "eShopOnContainers-ServicesAndWebApps.sln"
 
 COPY . .
 WORKDIR "/src/Services/Coupon/Coupon.API"
+
+FROM build as unittest
+WORKDIR /src/Services/Coupon/Coupon.UnitTests
+
+FROM build as functionaltest
+WORKDIR /src/Services/Coupon/Coupon.FunctionalTests
 
 FROM build AS publish
 RUN dotnet publish "Coupon.API.csproj" -c Release -o /app/publish

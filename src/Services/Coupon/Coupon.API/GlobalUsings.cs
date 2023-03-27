@@ -1,4 +1,5 @@
 ﻿global using Coupon.API.Filters;
+global using Coupon.API.Extensions;
 global using Coupon.API.Infrastructure.Repositories;
 global using Coupon.API.Infrastructure.Models;
 global using Autofac.Extensions.DependencyInjection;

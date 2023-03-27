@@ -1,7 +1,7 @@
 using Coupon.API;
+using Coupon.API.Extensions;
 using Coupon.API.Infrastructure;
 using Coupon.API.Infrastructure.Repositories;
-using Microsoft.eShopOnContainers.Services.Catalog.API.Extensions;
 
 namespace Coupon.FunctionalTests;
 

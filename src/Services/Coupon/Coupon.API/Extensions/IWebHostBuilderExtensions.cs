@@ -9,9 +9,9 @@ using Polly;
 
 namespace Coupon.API.Extensions
 {
-    public static class IHostBuilderExtensions
+    public static class IWebHostBuilderExtensions
     {
-        public static IHost SeedDatabaseStrategy<TContext>(this IHost host, Action<TContext> seeder)
+        public static IWebHost SeedDatabaseStrategy<TContext>(this IWebHost host, Action<TContext> seeder)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -34,7 +34,7 @@ namespace Coupon.API.Extensions
             return host;
         }
 
-        public static IHost SubscribersIntegrationEvents(this IHost host)
+        public static IWebHost SubscribersIntegrationEvents(this IWebHost host)
         {
             using (var scope = host.Services.CreateScope())
             {

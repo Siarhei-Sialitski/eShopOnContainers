@@ -27,4 +27,18 @@ public class LoyaltyMembersController : ControllerBase
 
         return loyaltyMember;
     }
+
+    [HttpPut("update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Infrastructure.Models.LoyaltyMember>> UpdateLoyaltyMember([FromBody] LoyaltyMember loyaltyMember)
+    {
+        var loyaltyMemberFromDb = await _loyaltyMemberRepository.FindLoyaltyMemberByUserId(loyaltyMember.UserId);
+
+        loyaltyMemberFromDb.Points = loyaltyMember.Points;
+        await _loyaltyMemberRepository.UpdateLoyaltyMemberByUserId(loyaltyMemberFromDb.UserId, loyaltyMemberFromDb.Points, loyaltyMember.TransactionsCount++);
+
+        return loyaltyMember;
+    }
 }
